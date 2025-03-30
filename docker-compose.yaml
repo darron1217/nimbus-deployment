@@ -12,7 +12,7 @@ services:
       --http-address=0.0.0.0
       --http-port=8545
       --rpc
-      --rpc-api=eth,net,web3
+      --rpc-api=eth,debug
     ports:
       - "8545:8545"
       - "30303:30303"
@@ -26,6 +26,8 @@ services:
       --data-dir=/data
       --el=http://execution:8551
       --el-jwt-secret=/execution-data/jwtsecret
+    ports:
+      - "9000:9000"
     volumes:
       - ./data/consensus:/data
       - ./data/execution:/execution-data
