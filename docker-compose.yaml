@@ -24,8 +24,9 @@ services:
     entrypoint: /entrypoint.sh
     command: >
       --data-dir=/data
-      --el=http://execution:8551
-      --el-jwt-secret=/execution-data/jwt.hex
+      --web3-url=http://execution:8551
+      --jwt-secret=/execution-data/jwt.hex
+      --trusted-block-root=${TRUSTED_BLOCK_ROOT}
     ports:
       - "9000:9000"
       - "5052:5052"
