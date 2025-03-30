@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  execution:
+    build: ./eth1
+    command: >
+      --data-dir=/data
+      --http.addr=0.0.0.0
+      --http.port=8551
+      --rpc
+      --rpc-addr=0.0.0.0
+      --rpc-port=8545
+      --rpc-api=eth,net,web3
+    ports:
+      - "8545:8545"
+      - "30303:30303"
+    volumes:
+      - ./data/execution:/data
+
+  consensus:
+    build: ./eth2
+    entrypoint: /entrypoint.sh
+    command: >
+      --data-dir=/data
+      --el http://execution:8551
+      --el-jwt-secret=/execution-data/jwtsecret
+    volumes:
+      - ./data/consensus:/data
+      - ./data/execution:/execution-data
+      - ./eth2/entrypoint.sh:/entrypoint.sh
