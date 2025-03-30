@@ -28,7 +28,18 @@ services:
       --el-jwt-secret=/execution-data/jwtsecret
     ports:
       - "9000:9000"
+      - "5052:5052"
     volumes:
       - ./data/consensus:/data
       - ./data/execution:/execution-data
       - ./eth2/entrypoint.sh:/entrypoint.sh
+
+  sync:
+    build: ./eth1
+    entrypoint: /bin/bash
+    command: -c "while true; do ./nrpc sync --beacon-api=http://consensus:5052 --el-engine-api=http://execution:8551 --jwt-secret=/execution-data/jwt.hex; sleep 2; done"
+    depends_on:
+      - execution
+      - consensus
+    volumes:
+      - ./data/execution:/execution-data
