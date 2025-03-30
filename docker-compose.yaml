@@ -7,9 +7,11 @@ services:
     command: >
       --data-dir=/data
       --engine-api
+      --engine-api-address=0.0.0.0
       --engine-api-port=8551
+      --http-address=0.0.0.0
+      --http-port=8545
       --rpc
-      --rpc-port=8545
       --rpc-api=eth,net,web3
     ports:
       - "8545:8545"
